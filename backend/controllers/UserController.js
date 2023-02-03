@@ -10,7 +10,7 @@ const generateToken = (id) => {
     });
 };
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
 
     const { name, email, password } = req.body;
 
@@ -41,4 +41,25 @@ const register = async (req, res) => {
     })
 }
 
-export { register };
+export const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        res.status(404).json({ erros: ["Usuário não encontrado."] })
+        return
+    }
+
+    if (!(await bcrypt.compare(password, user.password))) {
+        res.status(422).json({ erros: ["Senha inválida."] })
+        return
+    }
+
+    res.status(201).json({
+        _id: user._id,
+        profileImage: user.profileImage,
+        token: generateToken(user._id)
+    })
+
+}
