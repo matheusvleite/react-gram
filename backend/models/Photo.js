@@ -5,7 +5,7 @@ const photoSchema = new mongoose.Schema({
     title: String,
     likes: Array,
     comments: Array,
-    userId: mongoose.Schema.Types.ObjectId, ref: 'User',
+    userId: mongoose.Schema.Types.ObjectId,
     userName: String
 }, 
 {
