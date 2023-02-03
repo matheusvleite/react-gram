@@ -6,12 +6,12 @@ const userSchema = new mongoose.Schema({
     password: String,
     profileImage: String,
     bio: String
-}, 
-{
-    timestamps: true
-}
+},
+    {
+        timestamps: true
+    }
 );
 
-const user = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
-export default user;
+export default User;
