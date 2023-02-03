@@ -11,6 +11,7 @@ const generateToken = (id) => {
 };
 
 const register = async (req, res) => {
+    
     res.send("Registro");
 }
 
