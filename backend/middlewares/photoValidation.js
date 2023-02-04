@@ -28,3 +28,11 @@ export const photoUpdateValidation = () => {
             .withMessage("O título precisa ter no mínimo 3 caracteres.")
     ]
 }
+
+export const commentValidation = () => {
+    return [
+        body("comment")
+            .isString()
+            .withMessage("Comentário é obrigatório.")
+    ]
+}
