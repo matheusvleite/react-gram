@@ -50,3 +50,9 @@ export const deletePhoto = async (req, res) => {
 
     }
 }
+
+export const getAllPhotos = async (req, res) => {
+    const photos = await Photo.find({}).sort([["createdAt", -1]]).exec()
+
+    return res.status(200).json(photos)
+}
