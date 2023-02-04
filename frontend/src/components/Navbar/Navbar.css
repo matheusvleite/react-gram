@@ -1,0 +1,47 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    border-bottom: 1px solid #363636;
+    padding: .1rem 1rem;
+}
+
+.nav form {
+    position: relative;
+    width: 20%;
+}
+
+.nav form svg {
+    position: absolute;
+    top: 3px;
+    left: 7px;
+    color: #000;
+}
+
+.nav form input {
+    padding-left: 2.5rem;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 100%;
+    margin: 0;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li {
+    margin-right: 1rem;
+}
+
+.nav-links span {
+    cursor: pointer;
+}
+
+.nav-links svg {
+    font-size: 1.5rem;
+}
