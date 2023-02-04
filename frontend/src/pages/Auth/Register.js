@@ -9,7 +9,7 @@ const Register = () => {
         e.preventDefault();
     }
     return (
-        <div>
+        <div className='register'>
             <h2>ReactGram</h2>
             <p className="subtitle">Cadastre-se para ver o que há de bom!</p>
             <form onSubmit={handleSubmit}>
