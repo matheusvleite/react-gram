@@ -3,7 +3,7 @@ import { authGuard } from '../middlewares/authGuard.js';
 import { imageUpload } from '../middlewares/imageUpload.js';
 import { photoInsertValidation } from '../middlewares/photoValidation.js'
 import { validate } from '../middlewares/handleValidation.js';
-import { deletePhoto, getAllPhotos, getUserPhotos, insertPhoto } from '../controllers/PhotoController.js'
+import { deletePhoto, getAllPhotos, getPhotoById, getUserPhotos, insertPhoto } from '../controllers/PhotoController.js'
 
 export const photoRouter = express.Router();
 
@@ -17,4 +17,4 @@ photoRouter.post("/",
 photoRouter.delete("/:id", authGuard, deletePhoto);
 photoRouter.get("/", authGuard, getAllPhotos);
 photoRouter.get("/user/:id", authGuard, getUserPhotos);
-
+photoRouter.get("/:id", authGuard, getPhotoById);
