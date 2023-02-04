@@ -179,6 +179,12 @@ export const commentPhoto = async (req, res) => {
         res.status(404).json({ errors: ["Foto não encontrada.2"] })
     }
 
+}
 
+export const searchPhotos = async (req, res) => {
+    const { q } = req.query;
 
+    const photos = await Photo.find({ title: new RegExp(q, "i") }).exec()
+
+    res.status(200).json(photos);
 }
