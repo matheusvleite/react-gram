@@ -4,7 +4,7 @@ import { upload } from '../../utils/config';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 //Redux
-import { profile, resetMessage } from '../../slices/userSlice';
+import { profile, resetMessage, updateProfile } from '../../slices/userSlice';
 //Componets
 import Message from '../../components/Message/Message';
 
@@ -20,6 +20,7 @@ const EditProfile = () => {
     const [profileImage, setProfileImage] = useState('');
     const [bio, setBio] = useState('');
     const [previewImage, setPreviewImage] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
 
     useEffect(() => {
         dispatch(profile())
@@ -31,13 +32,50 @@ const EditProfile = () => {
             setEmail(user.email)
             setBio(user.bio)
         }
-    }, [])
+    }, [user])
 
-    console.log(user)
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-    }
+
+        // Gather user data from states
+        const userData = {
+            name,
+        };
+
+        if (profileImage) {
+            userData.profileImage = profileImage;
+        }
+
+        if (bio) {
+            userData.bio = bio;
+        }
+
+        if (password !== confirmPassword) {
+            setErrorPassword("A senhas precisam ser iguais!")
+            return
+        }
+
+        if (password) {
+            userData.password = password;
+        }
+
+        // build form data
+        const formData = new FormData();
+
+        const userFormData = Object.keys(userData).forEach((key) =>
+            formData.append(key, userData[key])
+        );
+
+        formData.append("user", userFormData);
+
+        await dispatch(updateProfile(formData));
+
+        setErrorPassword('')
+
+        setTimeout(() => {
+            dispatch(resetMessage());
+        }, 2000);
+    };
 
     const handleFile = (e) => {
         const image = e.target.files[0]
@@ -68,7 +106,11 @@ const EditProfile = () => {
                     <input type="password" placeholder='Digite sua nova senha' onChange={e => setPassword(e.target.value)} value={password || ''} />
                 </label>
                 <input type="password" placeholder='Confirme a senha' onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword || ''} />
-                <input type="submit" value="Atualizar" />
+                {!loading && <input type="submit" value="Atualizar" />}
+                {loading && <input type="submit" value="Aguarde..." disabled />}
+                {error && <Message message={error} type="error" />}
+                {errorPassword && <Message message={errorPassword} type="error" />}
+                {message && <Message message={message} type="sucess" />}
             </form>
         </div>
     )
