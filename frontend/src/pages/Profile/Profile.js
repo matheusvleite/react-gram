@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // Redux
 import { getUserDetails } from '../../slices/userSlice';
-import { publishPhoto, resetMessage } from '../../slices/photoSlice';
+import { publishPhoto, resetMessage, getUserPhotos } from '../../slices/photoSlice';
 
 const Profile = () => {
     const { id } = useParams();
@@ -31,6 +31,7 @@ const Profile = () => {
 
     useEffect(() => {
         dispatch(getUserDetails(id))
+        dispatch(getUserPhotos(id))
     }, [dispatch, id])
 
     const handleSubmit = (e) => {
@@ -77,28 +78,47 @@ const Profile = () => {
                 </div>
             </div>
             {id === userAuth._id && (
-                <div className="new-photo" ref={newPhotoForm}>
-                    <h3>Compartilhe algum momento seu:</h3>
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            <span>Título para a foto:</span>
-                            <input type="text" placeholder='Insira um título' onChange={e => setTitle(e.target.value)} value={title || ''} />
-                        </label>
-                        <label>
-                            <span>Imagem:</span>
-                            <input type="file" onChange={handleFile} />
-                        </label>
-                        {image && (
+                <>
+                    <div className="new-photo" ref={newPhotoForm}>
+                        <h3>Compartilhe algum momento seu:</h3>
+                        <form onSubmit={handleSubmit}>
+                            <label>
+                                <span>Título para a foto:</span>
+                                <input type="text" placeholder='Insira um título' onChange={e => setTitle(e.target.value)} value={title || ''} />
+                            </label>
+                            <label>
+                                <span>Imagem:</span>
+                                <input type="file" onChange={handleFile} />
+                            </label>
+                            {image && (
                                 <img src={URL.createObjectURL(image)} alt="Preview da imagem" />
                             )}
-                        {!loadingPhoto && <input type="submit" value="Postar" />}
-                        {loadingPhoto && <input type="submit" value="Aguarde..." disabled />}
-                    </form>
-                </div>
+                            {!loadingPhoto && <input type="submit" value="Postar" />}
+                            {loadingPhoto && <input type="submit" value="Aguarde..." disabled />}
+                        </form>
+                    </div>
+                    {errorPhoto && <Message message={errorPhoto} type="error" />}
+                    {messagePhoto && <Message message={messagePhoto} type="sucess" />}
+                </>
             )}
-            
-            {errorPhoto && <Message message={errorPhoto} type="error" />}
-            {messagePhoto && <Message message={messagePhoto} type="sucess" />}
+            <div className="user-photos">
+                <h2>Fotos publicadas:</h2>
+                <div className="photos-container">
+                    {photos && photos.map(photo => (
+                        <div className='photo' key={photo._id}>
+                            {photo.image && <img src={`${upload}/photos/${photo.image}`} alt={photo.title} />}
+                            {id === userAuth._id ? (
+                                <div className='actions'>
+                                    <Link to={`/photos/${photo._id}`}><BsFillEyeFill /></Link>
+                                    <BsPencilFill />
+                                    <BsXLg />
+                                </div>
+                            ) : (<Link className='btn' to={`/photos/${photo._id}`}>Ver</Link>)}
+                        </div>
+                    ))}
+                    {photos.length === 0 && <p>Ainda não há fotos publicadas.</p>}
+                </div>
+            </div>
         </div>
     )
 }
