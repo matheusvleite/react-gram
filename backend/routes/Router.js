@@ -7,7 +7,5 @@ export const router = express();
 
 router.use('/api/users', routes)
 router.use('/api/photos', photoRouter)
-router.get("/", (req, res) => {
-    res.send("API Working!")
-})
+
 
