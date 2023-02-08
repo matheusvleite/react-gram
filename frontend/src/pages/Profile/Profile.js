@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // Redux
 import { getUserDetails } from '../../slices/userSlice';
-import { publishPhoto, resetMessage, getUserPhotos } from '../../slices/photoSlice';
+import { publishPhoto, resetMessage, getUserPhotos, deletePhoto } from '../../slices/photoSlice';
 
 const Profile = () => {
     const { id } = useParams();
@@ -34,6 +34,18 @@ const Profile = () => {
         dispatch(getUserPhotos(id))
     }, [dispatch, id])
 
+
+    const handleFile = (e) => {
+        const image = e.target.files[0]
+        setImage(image)
+    }
+
+    const resetComponentMessage = (time) => {
+        setTimeout(() => {
+            dispatch(resetMessage());
+        }, time);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -53,14 +65,12 @@ const Profile = () => {
         setTitle("")
         setImage("")
 
-        setTimeout(() => {
-            dispatch(resetMessage());
-        }, 2000);
+        resetComponentMessage(2000)
     }
 
-    const handleFile = (e) => {
-        const image = e.target.files[0]
-        setImage(image)
+    const handleDelete = (id) => {
+        dispatch(deletePhoto(id))
+        resetComponentMessage(2000)
     }
 
     if (loading) {
@@ -111,7 +121,7 @@ const Profile = () => {
                                 <div className='actions'>
                                     <Link to={`/photos/${photo._id}`}><BsFillEyeFill /></Link>
                                     <BsPencilFill />
-                                    <BsXLg />
+                                    <BsXLg onClick={() => handleDelete(photo._id)} />
                                 </div>
                             ) : (<Link className='btn' to={`/photos/${photo._id}`}>Ver</Link>)}
                         </div>
