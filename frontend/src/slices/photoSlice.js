@@ -81,6 +81,21 @@ export const getPhotoById = createAsyncThunk(
     }
 )
 
+export const likeAnPhoto = createAsyncThunk(
+    "photo/like",
+    async (id, thunkAPI) => {
+        const token = thunkAPI.getState().auth.user.token;
+
+        const data = await photoService.likeAnPhoto(id, token);
+
+        if (data.errors) {
+            return thunkAPI.rejectWithValue(data.errors[0])
+        }
+
+        return data;
+    }
+)
+
 export const photoSlice = createSlice({
     name: "photo",
     initialState,
@@ -155,6 +170,34 @@ export const photoSlice = createSlice({
                 state.error = null;
                 state.photo = action.payload;
             }).addCase(getPhotoById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.photo = {};
+            }).addCase(getPhotoById.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.photo = action.payload;
+            }).addCase(getPhotoById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.photo = {};
+            }).addCase(likeAnPhoto.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                if (state.photo.likes) {
+                    state.photo.likes.push(action.payload.userId)
+                }
+
+                state.photos.map(photo => {
+                    if (photo._id === action.payload.photo.photoId) {
+                        return photo.likes.push(action.payload.userId)
+                    }
+                    return photo;
+                })
+                state.message = action.payload.message;
+            }).addCase(likeAnPhoto.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
                 state.photo = {};
