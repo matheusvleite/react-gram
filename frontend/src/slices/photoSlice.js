@@ -98,10 +98,10 @@ export const likeAnPhoto = createAsyncThunk(
 
 export const getAllPhotos = createAsyncThunk(
     'photo/getallphotos',
-    async (thunkAPI) => {
+    async (_,thunkAPI) => {
         const token = thunkAPI.getState().auth.user.token;
 
-        const data = await photoService.gelAllPhotos(token)
+        const data = await photoService.getAllPhotos(token)
 
         return data;
     }
