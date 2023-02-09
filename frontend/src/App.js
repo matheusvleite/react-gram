@@ -17,8 +17,6 @@ import Photo from './pages/Photo/Photo';
 const App = () => {
   const { auth, loading } = useAuth();
 
-  console.log(loading)
-
   if (loading) {
     return <p>Carregando...</p>
   }

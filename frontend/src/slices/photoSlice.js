@@ -173,15 +173,6 @@ export const photoSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.photo = {};
-            }).addCase(getPhotoById.fulfilled, (state, action) => {
-                state.loading = false;
-                state.success = true;
-                state.error = null;
-                state.photo = action.payload;
-            }).addCase(getPhotoById.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-                state.photo = {};
             }).addCase(likeAnPhoto.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
@@ -191,7 +182,7 @@ export const photoSlice = createSlice({
                 }
 
                 state.photos.map(photo => {
-                    if (photo._id === action.payload.photo.photoId) {
+                    if (photo._id === action.payload.photoId) {
                         return photo.likes.push(action.payload.userId)
                     }
                     return photo;
