@@ -5,11 +5,11 @@ import Message from '../../components/Message/Message';
 import { Link, useParams } from 'react-router-dom';
 import { BsFillEyeFill, BsPencilFill, BsXLg } from 'react-icons/bs'
 //Hooks
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // Redux
 import { getUserDetails } from '../../slices/userSlice';
-import { publishPhoto, resetMessage, getUserPhotos, deletePhoto } from '../../slices/photoSlice';
+import { publishPhoto, resetMessage, getUserPhotos, deletePhoto, updatePhoto } from '../../slices/photoSlice';
 
 const Profile = () => {
     const { id } = useParams();
@@ -25,9 +25,10 @@ const Profile = () => {
 
     const [title, setTitle] = useState('');
     const [image, setImage] = useState('');
+    const [edit, setEdit] = useState(false);
+    const [imageEdit, setImageEdit] = useState('');
+    const [photoIdEdit, setIdEdit] = useState('');
 
-    const newPhotoForm = useRef();
-    const editPhotoForm = useRef();
 
     useEffect(() => {
         dispatch(getUserDetails(id))
@@ -48,6 +49,19 @@ const Profile = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (edit) {
+            const photoData = {
+                title,
+                id: photoIdEdit
+            }
+
+            dispatch(updatePhoto(photoData))
+            resetComponentMessage(2000)
+            setEdit(false)
+            setTitle('')
+            return
+        }
 
         const photoData = {
             title,
@@ -73,6 +87,19 @@ const Profile = () => {
         resetComponentMessage(2000)
     }
 
+    const handleEdit = (id, title, image) => {
+        setImageEdit(image)
+        setTitle(title)
+        setIdEdit(id)
+        setEdit(true)
+
+    }
+
+    const handleCancelEdit = () => {
+        setEdit(false)
+        setTitle('')
+    }
+
     if (loading) {
         return <p>Carregando...</p>
     }
@@ -89,8 +116,8 @@ const Profile = () => {
             </div>
             {id === userAuth._id && (
                 <>
-                    <div className="new-photo" ref={newPhotoForm}>
-                        <h3>Compartilhe algum momento seu:</h3>
+                    <div className="new-photo">
+                        {edit ? <h3>Editando:</h3> : <h3>Compartilhe algum momento seu:</h3>}
                         <form onSubmit={handleSubmit}>
                             <label>
                                 <span>Título para a foto:</span>
@@ -98,14 +125,15 @@ const Profile = () => {
                             </label>
                             <label>
                                 <span>Imagem:</span>
-                                <input type="file" onChange={handleFile} />
+                                {edit ? <img src={`${upload}/photos/${imageEdit}`} /> : <input type="file" onChange={handleFile} />}
                             </label>
                             {image && (
                                 <img src={URL.createObjectURL(image)} alt="Preview da imagem" />
                             )}
-                            {!loadingPhoto && <input type="submit" value="Postar" />}
+                            {!loadingPhoto && <input type="submit" value={edit ? 'Atualizar' : 'Postar'} />}
                             {loadingPhoto && <input type="submit" value="Aguarde..." disabled />}
                         </form>
+                        {edit && <button onClick={handleCancelEdit} className='cancel-btn'>Cancelar edição</button>}
                     </div>
                     {errorPhoto && <Message message={errorPhoto} type="error" />}
                     {messagePhoto && <Message message={messagePhoto} type="sucess" />}
@@ -120,7 +148,7 @@ const Profile = () => {
                             {id === userAuth._id ? (
                                 <div className='actions'>
                                     <Link to={`/photos/${photo._id}`}><BsFillEyeFill /></Link>
-                                    <BsPencilFill />
+                                    <BsPencilFill onClick={() => handleEdit(photo._id, photo.title, photo.image)} />
                                     <BsXLg onClick={() => handleDelete(photo._id)} />
                                 </div>
                             ) : (<Link className='btn' to={`/photos/${photo._id}`}>Ver</Link>)}

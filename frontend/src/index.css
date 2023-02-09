@@ -83,8 +83,5 @@ input[type="submit"]:hover {
 
 .cancel-btn {
     background-color: #ccc;
-}
-
-.hide {
-    display: none;
+    width: 100%;
 }
