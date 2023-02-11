@@ -172,7 +172,7 @@ export const commentPhoto = async (req, res) => {
 
 
         res.status(200).json({
-            commet: userComment,
+            comment: userComment,
             message: "O comentário foi adicionado com sucesso"
         })
     } catch (error) {
