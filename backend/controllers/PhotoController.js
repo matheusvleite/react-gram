@@ -155,7 +155,7 @@ export const commentPhoto = async (req, res) => {
         const photo = await Photo.findById(id)
 
         if (!photo) {
-            res.status(404).json({ errors: ["Foto não encontrada.1"] })
+            res.status(404).json({ errors: ["Foto não encontrada."] })
             return
         }
 
@@ -176,7 +176,7 @@ export const commentPhoto = async (req, res) => {
             message: "O comentário foi adicionado com sucesso"
         })
     } catch (error) {
-        res.status(404).json({ errors: ["Foto não encontrada.2"] })
+        res.status(404).json({ errors: ["Foto não encontrada."] })
     }
 
 }

@@ -45,23 +45,28 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email })
+    try {
+        const user = await User.findOne({ email })
 
-    if (!user) {
-        res.status(404).json({ errors: ["Usuário não encontrado."] })
+        if (!user) {
+            res.status(404).json({ errors: ["Usuário não encontrado."] })
+            return
+        }
+
+        if (!(await bcrypt.compare(password, user.password))) {
+            res.status(422).json({ errors: ["Senha inválida."] })
+            return
+        }
+
+        res.status(201).json({
+            _id: user._id,
+            profileImage: user.profileImage,
+            token: generateToken(user._id)
+        })
+    } catch (error) {
+        res.status(500).json({ errors: ["Erro interno do servidor."] })
         return
     }
-
-    if (!(await bcrypt.compare(password, user.password))) {
-        res.status(422).json({ errors: ["Senha inválida."] })
-        return
-    }
-
-    res.status(201).json({
-        _id: user._id,
-        profileImage: user.profileImage,
-        token: generateToken(user._id)
-    })
 
 }
 
@@ -115,12 +120,12 @@ export const getUserById = async (req, res) => {
         const user = await User.findById(mongoose.Types.ObjectId(id)).select("-password")
 
         if (!user) {
-            res.status(404).json({ errors: ["Usuário não encontrado.2"] })
+            res.status(404).json({ errors: ["Usuário não encontrado."] })
             return
         }
         res.status(200).json(user);
     } catch (error) {
-        res.status(404).json({ errors: ["Usuário não encontrado"] })
+        res.status(404).json({ errors: ["Usuário não encontrado."] })
         return
     }
 
