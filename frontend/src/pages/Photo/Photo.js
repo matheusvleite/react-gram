@@ -66,7 +66,7 @@ const Photo = () => {
             <div className="comments">
                 {photo.comments && (
                     <>
-                        <h3>Comentários ({photo.comments.length}):</h3>
+                        <h3>Comentários ({photo.comments.length}) :</h3>
                         <form onSubmit={handleComment}>
                             <input
                                 type="text"

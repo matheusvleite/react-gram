@@ -11,10 +11,30 @@
     margin: .5rem 0 2rem 0;
 }
 
+.photo-utils {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
 .no-photos {
     text-align: center;
 }
 
 .no-photos a {
     color: #0094f6;
+}
+
+.comment-area {
+    display: flex;
+    align-items: center;
+}
+
+.comment-area svg {
+    font-size: 1.3rem;
+}
+
+.comment-area p {
+    margin-left: 1rem;
 }
