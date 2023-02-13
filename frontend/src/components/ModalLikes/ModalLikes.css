@@ -1,0 +1,21 @@
+.modal-content {
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    position: fixed;
+    right: auto;
+    bottom: auto;
+    border: none;
+    margin-right: -50%;
+    background-color: #121212;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+}
+
+.likes-area {
+    height: 30vh;
+    overflow: hidden auto;
+    margin: 0;
+    padding: 0;
+}

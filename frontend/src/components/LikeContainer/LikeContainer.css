@@ -16,5 +16,7 @@
 }
 
 .like p {
-    margin-left: 1rem
+    margin-left: 1rem;
+    cursor: pointer;
+    
 }

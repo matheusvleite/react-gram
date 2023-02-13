@@ -125,7 +125,7 @@ const Profile = () => {
                             </label>
                             <label>
                                 <span>Imagem:</span>
-                                {edit ? <img src={`${upload}/photos/${imageEdit}`} /> : <input type="file" onChange={handleFile} />}
+                                {edit ? <img src={`${upload}/photos/${imageEdit}`} alt="Imagem para editar" /> : <input type="file" onChange={handleFile} />}
                             </label>
                             {image && (
                                 <img src={URL.createObjectURL(image)} alt="Preview da imagem" />
