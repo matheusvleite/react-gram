@@ -132,7 +132,7 @@ export const likePhoto = async (req, res) => {
             return
         }
 
-        photo.likes.push(reqUser._id)
+        photo.likes.push({ id: reqUser._id, name: reqUser.name })
 
         photo.save()
 

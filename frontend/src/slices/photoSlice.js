@@ -215,12 +215,12 @@ export const photoSlice = createSlice({
                 state.success = true;
                 state.error = null;
                 if (state.photo.likes) {
-                    state.photo.likes.push(action.payload.userId)
+                    state.photo.likes.push({ id: action.payload.userId, name: action.payload.name })
                 }
 
                 state.photos.map(photo => {
                     if (photo._id === action.payload.photoId) {
-                        return photo.likes.push(action.payload.userId)
+                        return photo.likes.push({id: action.payload.userId, name: action.payload.name})
                     }
                     return photo;
                 })
