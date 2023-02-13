@@ -1,5 +1,5 @@
 import express from "express"
-import path, {dirname} from "path"
+import path, { dirname } from "path"
 import cors from "cors";
 import dotenv from "dotenv/config";
 import { router } from "./routes/Router.js";
@@ -16,12 +16,12 @@ app.use(express.urlencoded({ extended: false }))
 
 // cors
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" || "https://react-gram-nu.vercel.app/" }));
 
 // upload
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use("/uploads", express.static(path.join(__dirname,'/uploads')));
+app.use("/uploads", express.static(path.join(__dirname, '/uploads')));
 
 // DB connection
 
