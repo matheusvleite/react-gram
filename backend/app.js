@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // cors
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" || "https://react-gram-nu.vercel.app/" }));
+app.use(cors({ credentials: true, origin: "https://react-gram-nu.vercel.app/" }));
 
 // upload
 const __dirname = dirname(fileURLToPath(import.meta.url));
