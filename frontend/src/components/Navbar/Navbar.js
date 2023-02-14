@@ -6,7 +6,8 @@ import {
     BsSearch,
     BsHouseDoorFill,
     BsFillPersonFill,
-    BsFillCameraFill
+    BsFillCameraFill,
+    BsFillGridFill
 } from 'react-icons/bs';
 
 // Hooks 
@@ -41,6 +42,10 @@ const Navbar = () => {
         if (query) {
             return navigate(`/search?q=${query}`)
         }
+    }
+
+    const handleMenuMobile = () => {
+        
     }
 
     return (
@@ -81,6 +86,9 @@ const Navbar = () => {
                             </>
                         )}
                 </ul>
+                <div className='hamburguer'>
+                    <BsFillGridFill onClick={handleMenuMobile} />
+                </div>
             </nav>
         </header>
     )
