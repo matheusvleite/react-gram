@@ -1,7 +1,15 @@
 .search {
-    width: 50%;
+    width: 80%;
     margin: 0 auto;
     padding-top: 2rem;
+}
+
+@media screen and (min-width: 769px) {
+    .search {
+        width: 50%;
+        margin: 0 auto;
+        padding-top: 2rem;
+    }
 }
 
 .search h2 {
