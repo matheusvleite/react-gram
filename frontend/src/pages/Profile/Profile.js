@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // Redux
 import { getUserDetails } from '../../slices/userSlice';
 import { publishPhoto, resetMessage, getUserPhotos, deletePhoto, updatePhoto } from '../../slices/photoSlice';
+import Loading from '../../components/Loading/Loading';
 
 const Profile = () => {
     const { id } = useParams();
@@ -101,7 +102,7 @@ const Profile = () => {
     }
 
     if (loading) {
-        return <p>Carregando...</p>
+        return <Loading />
     }
     return (
         <div className='profile'>

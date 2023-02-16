@@ -1,0 +1,12 @@
+.loading {
+    text-align: center;
+}
+
+.loading img {
+    width: 150px;
+    height: 120px;
+}
+
+.loading p {
+    margin-top: 0;
+}

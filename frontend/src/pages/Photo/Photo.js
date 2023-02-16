@@ -4,6 +4,7 @@ import { upload } from '../../utils/config';
 import Message from '../../components/Message/Message';
 import { Link, useParams } from 'react-router-dom';
 import PhotoItem from '../../components/PhotoItem/PhotoItem';
+import Loading from '../../components/Loading/Loading';
 // Hooks
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -52,7 +53,7 @@ const Photo = () => {
     }
 
     if (loading) {
-        return <div className="photo-container"><p>Carregando...</p></div>
+        return <Loading />
     }
 
     return (

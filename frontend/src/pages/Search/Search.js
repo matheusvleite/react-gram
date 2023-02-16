@@ -11,6 +11,7 @@ import { BsFillChatLeftFill } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
 // redux
 import { searchPhotos, likeAnPhoto } from '../../slices/photoSlice';
+import Loading from '../../components/Loading/Loading';
 
 const Search = () => {
     const query = useQuery();
@@ -34,7 +35,7 @@ const Search = () => {
     }
 
     if (loading) {
-        return <p>Carregando...</p>
+        return <Loading />
     }
 
     return (

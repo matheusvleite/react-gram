@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { profile, resetMessage, updateProfile } from '../../slices/userSlice';
 //Componets
 import Message from '../../components/Message/Message';
+import Loading from '../../components/Loading/Loading';
 
 const EditProfile = () => {
     const dispatch = useDispatch();
@@ -81,6 +82,10 @@ const EditProfile = () => {
         const image = e.target.files[0]
         setPreviewImage(image)
         setProfileImage(image)
+    }
+
+    if (loading) {
+        return <Loading />
     }
 
     return (

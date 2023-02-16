@@ -4,6 +4,7 @@ import LikeContainer from '../../components/LikeContainer/LikeContainer';
 import PhotoItem from '../../components/PhotoItem/PhotoItem';
 import { Link } from 'react-router-dom';
 import { BsFillChatLeftFill } from 'react-icons/bs'
+import Loading from '../../components/Loading/Loading';
 // Hooks
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -31,7 +32,7 @@ const Home = () => {
     }
 
     if (loading) {
-        return <p>Carregando...</p>
+        return <Loading />
     }
 
     return (
@@ -42,7 +43,7 @@ const Home = () => {
                     <div className="photo-utils">
                         <LikeContainer photo={photo} user={user} handleLike={handleLike} />
                         <div className="comment-area">
-                        <Link to={`/photos/${photo._id}`}><BsFillChatLeftFill /></Link><p>{photo.comments.length} Comentários</p>
+                            <Link to={`/photos/${photo._id}`}><BsFillChatLeftFill /></Link><p>{photo.comments.length} Comentários</p>
                         </div>
                     </div>
                     <Link className='btn' to={`/photos/${photo._id}`}>Ver mais</Link>
