@@ -9,6 +9,7 @@ import {
     BsFillCameraFill,
     BsFillGridFill
 } from 'react-icons/bs';
+import NavBarMobile from '../NavBarMobile/NavBarMobile';
 
 // Hooks 
 import { useState } from 'react';
@@ -25,6 +26,7 @@ const Navbar = () => {
     const { user } = useSelector((state) => state.auth);
 
     const [query, setQuery] = useState('');
+    const [menuActive, setMenuActive] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +34,8 @@ const Navbar = () => {
     const handleLogout = () => {
         dispatch(logout())
         dispatch(reset())
-
+        
+        handleMenuMobile() // close menu mobile
         navigate("/login")
     }
 
@@ -40,16 +43,29 @@ const Navbar = () => {
         e.preventDefault();
 
         if (query) {
-            return navigate(`/search?q=${query}`)
+            navigate(`/search?q=${query}`)
+            handleMenuMobile() // close menu mobile
+            return
         }
+
     }
 
     const handleMenuMobile = () => {
-        
+        setMenuActive(!menuActive)
     }
 
     return (
         <header>
+            <NavBarMobile 
+            toggleMenu={handleMenuMobile} 
+            menuActive={menuActive}
+            handleLogout={handleLogout}
+            auth={auth}
+            user={user}
+            handleSubmit={handleSubmit}
+            setQuery={setQuery}
+            query={query}
+            />
             <nav className="nav">
                 <Link to="/">ReactGram</Link>
                 <form onSubmit={handleSubmit}>
@@ -86,9 +102,7 @@ const Navbar = () => {
                             </>
                         )}
                 </ul>
-                <div className='hamburguer'>
-                    <BsFillGridFill onClick={handleMenuMobile} />
-                </div>
+                <BsFillGridFill onClick={handleMenuMobile} className='hamburguer' />
             </nav>
         </header>
     )

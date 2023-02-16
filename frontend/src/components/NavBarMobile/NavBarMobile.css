@@ -1,0 +1,55 @@
+.nav-mobile {
+    position: fixed;
+    backdrop-filter: blur(3px);
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    z-index: 3;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background-color: rgba(8, 2, 2, 0.85);
+    display: none;
+}
+
+.nav-mobile .close {
+    position: absolute;
+    left: 92%;
+    top: 3%;
+    font-size: 1.3rem;
+}
+
+.nav-mobile ul {
+    text-align: center;
+    margin-top: 5rem;
+    padding: 0;
+}
+
+.nav-mobile ul li {
+    margin-top: .5rem;
+    font-size: 1.2rem;
+}
+
+.nav-mobile form {
+    display: flex;
+    flex-direction: initial;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.nav-mobile form svg {
+    font-size: 1.5rem;
+    margin-left: .3rem;
+}
+
+.nav-mobile form input {
+  width: 50%;
+  margin-bottom: 0;
+}
+
+.mobileOpen {
+    display: block;
+}
